@@ -36,12 +36,21 @@ gltfLoader.setDRACOLoader(dracoLoader)
 /**
  * Object
  */
-const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial()
-)
 
-scene.add(cube)
+// Texture
+const bakedTexture = textureLoader.load('mymodels/baked2.jpg')
+bakedTexture.flipY = false
+bakedTexture.encoding = THREE.sRGBEncoding
+// Materials 
+const bakedMaterial = new THREE.MeshBasicMaterial({map:bakedTexture})
+
+// Model
+gltfLoader.load('mymodels/land1.glb',(mdoel)=>{
+    mdoel.scene.traverse(child => {
+        child.material = bakedMaterial
+    })
+    scene.add(mdoel.scene)
+})
 
 /**
  * Sizes
@@ -89,7 +98,7 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-
+renderer.outputEncoding = THREE.sRGBEncoding
 /**
  * Animate
  */
