@@ -54,7 +54,10 @@ const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
 const portalMaterial = new THREE.ShaderMaterial(
   {
     vertexShader:portalShaderVertex,
-    fragmentShader : portalFragment
+    fragmentShader : portalFragment,
+    uniforms:{
+      uTime: { value: 0}
+    }
   }
 )
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
@@ -62,7 +65,7 @@ const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
 
 
 // Model
-gltfLoader.load("mymodels/land5.glb", (mdoel) => {
+gltfLoader.load("mymodels/land1v4.glb", (mdoel) => {
 //   mdoel.scene.traverse((child) => {
 //     console.log(child.name)
 //     child.material = bakedMaterial;
@@ -188,7 +191,8 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   fireFliesMaterial.uniforms.uTime.value = elapsedTime
-
+  portalMaterial.uniforms.uTime.value = elapsedTime
+  
   // Update controls
   controls.update();
 
