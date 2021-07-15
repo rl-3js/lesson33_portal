@@ -8,6 +8,9 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import fireFliesFragment from './shaders/fireFlies/fragment.glsl'
 import fireFliesShaderVertex from './shaders/fireFlies/vertex.glsl'
 
+import portalFragment from './shaders/portal/fragment.glsl'
+import portalShaderVertex from './shaders/portal/vertex.glsl'
+
 /**
  * Base
  */
@@ -48,7 +51,12 @@ bakedTexture.flipY = false;
 bakedTexture.encoding = THREE.sRGBEncoding;
 // Materials
 const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
-const portalMaterial = new THREE.MeshBasicMaterial({color:"white"})
+const portalMaterial = new THREE.ShaderMaterial(
+  {
+    vertexShader:portalShaderVertex,
+    fragmentShader : portalFragment
+  }
+)
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5 })
 
 
